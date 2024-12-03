@@ -3,7 +3,7 @@ import folium
 from folium.plugins import HeatMap
 
 # File paths
-schools_file = 'data/Project-Sites_AdHoc-2024-11-11-15-14-28_School_Locations.csv'  # Initial file with School Name, Latitude, and Longitude
+schools_file = 'data/Project-Sites_AdHoc-2024-11-11-15-14-28(Geolocations).csv'  # Initial file with School Name, Latitude, and Longitude
 counts_file = 'data/Project-Sites_AdHoc-2024-11-11-15-14-28_School_Frequency.csv'    # File with School and Count (frequency)
 
 # Load the data
@@ -11,8 +11,8 @@ schools_data = pd.read_csv(schools_file, encoding='latin1')
 counts_data = pd.read_csv(counts_file, encoding='latin1')
 
 # Check for required columns in each file
-if not {'School Name', 'Latitude', 'Longitude'}.issubset(schools_data.columns):
-    raise ValueError("schools.csv must contain 'School Name', 'Latitude', and 'Longitude' columns.")
+if not {'School', 'Latitude', 'Longitude'}.issubset(schools_data.columns):
+    raise ValueError("schools.csv must contain 'School', 'Latitude', and 'Longitude' columns.")
 if not {'School', 'Count'}.issubset(counts_data.columns):
     raise ValueError("counts.csv must contain 'School' and 'Count' columns.")
 
@@ -20,7 +20,7 @@ if not {'School', 'Count'}.issubset(counts_data.columns):
 merged_data = pd.merge(
     schools_data,
     counts_data,
-    left_on='School Name',
+    left_on='School',
     right_on='School',
     how='inner'
 )
